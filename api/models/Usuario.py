@@ -6,6 +6,16 @@ class Usuario(AbstractUser):
 	('M', 'Masculino'),
 	('F', 'Femenino'),
 	]
+	TIPOSANGRE = [
+	('O-', 'O negativo'),
+	('O+', 'O positivo'),
+	('A-', 'A negativo'),
+	('A+', 'A positivo'),
+	('B-', 'B negativo'),
+	('B+', 'B positivo'),
+	('AB-', 'AB negativo'),
+	('AB+', 'AB positivo'),
+	]
 	nombre = models.CharField(max_length=50,blank=True,null=True)
 	apellido_materno = models.CharField(max_length=50,blank=True,null=True)
 	apellido_paterno = models.CharField(max_length=50,blank=True,null=True)
@@ -19,6 +29,6 @@ class Usuario(AbstractUser):
 	colonia=models.CharField(max_length=50,blank=True,null=True)
 	codigo_postal=models.CharField(max_length=50,blank=True,null=True)
 	alergia=models.TextField(max_length=100,blank=True,null=True)
-
+	tipo_de_sangre = models.CharField(max_length=3, choices=TIPOSANGRE,blank=True,null=True)
 	def __str__(self):
 		return self.username
