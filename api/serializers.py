@@ -13,25 +13,32 @@ from .models import *
 ##Get the current User Class defined in setting.py
 User = get_user_model()
 
+
 class UserCreateSerializerCustomFields(UserCreateSerializer):
-    class Meta:
-        model = User
-        fields = tuple(User.REQUIRED_FIELDS) + (
-            settings.LOGIN_FIELD,
-            User._meta.pk.name,
-            "password",
-            'nombre',
-            'apellido_materno',
-            'apellido_paterno',
-            'cumpleanos',
-            'sexo',
-            'telefono',
-            'pais',
-            'estado',
-            'colonia',
-            'calle',
-            'numero',
-            'codigo_postal',
-            'alergia',
-            'tipo_de_sangre',
-        )
+	class Meta:
+		model = User
+		fields =  (
+			settings.LOGIN_FIELD,
+			"password",
+			'nombre',
+			'apellido_materno',
+			'apellido_paterno',
+			'cumpleanos',
+			'sexo',
+			'telefono',
+			'pais',
+			'estado',
+			'colonia',
+			'calle',
+			'numero',
+			'codigo_postal',
+			'alergia',
+			'tipo_de_sangre',
+		)
+	def perform_create(self, validated_data):
+		with transaction.atomic():
+			user = User.objects.create_user(**validated_data)
+			if settings.SEND_ACTIVATION_EMAIL:
+				user.is_active = False
+				user.save(update_fields=["is_active"])
+		return user
