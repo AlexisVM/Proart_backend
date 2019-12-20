@@ -15,6 +15,7 @@ User = get_user_model()
 
 
 class UserCreateSerializerCustomFields(UserCreateSerializer):
+
 	class Meta:
 		model = User
 		fields =  (
@@ -35,10 +36,4 @@ class UserCreateSerializerCustomFields(UserCreateSerializer):
 			'alergia',
 			'tipo_de_sangre',
 		)
-	def perform_create(self, validated_data):
-		with transaction.atomic():
-			user = User.objects.create_user(**validated_data)
-			if settings.SEND_ACTIVATION_EMAIL:
-				user.is_active = False
-				user.save(update_fields=["is_active"])
-		return user
+
