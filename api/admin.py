@@ -26,4 +26,8 @@ class UsuarioAdmin(UserAdmin):
 
 
 admin.site.register(Usuario.Usuario, UsuarioAdmin)
-
+admin.site.register(Programa.Disciplina)
+admin.site.register(Programa.SubDisciplina)
+admin.site.register(Programa.TipoPrograma)
+admin.site.register(Programa.Nivel)
+admin.site.register(Programa.Programa)
