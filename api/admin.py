@@ -20,7 +20,12 @@ class UsuarioAdmin(UserAdmin):
 	search_fields = ('nombre','apellido_paterno', 'apellido_materno', 'email','sexo')
 	ordering = ('apellido_paterno','apellido_materno')
 	filter_horizontal = ('groups', 'user_permissions',)
-	
+	add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
 	def edad(self, obj):
 		return ("%s" % relativedelta(datetime.date.today(),obj.cumpleanos).years)
 
