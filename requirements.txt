@@ -3,3 +3,4 @@ django-cors-headers
 djangorestframework
 djoser
 dateutils
+psycopg2-binary

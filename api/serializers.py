@@ -13,14 +13,14 @@ from .models import *
 ##Get the current User Class defined in setting.py
 User = get_user_model()
 
-
+print(User)
 class UserCreateSerializerCustomFields(UserCreateSerializer):
 
 	class Meta:
 		model = User
 		fields =  (
 			settings.LOGIN_FIELD,
-			"password",
+			'password',
 			'nombre',
 			'apellido_materno',
 			'apellido_paterno',

@@ -9,7 +9,7 @@ import datetime
 class UsuarioAdmin(UserAdmin):
 	fieldsets = (
 		(None, {'fields': ('email', 'password')}),
-		(_('Personal info'), {'fields': ('nombre','apellido_paterno', 'apellido_materno','cumpleanos','sexo','telefono','pais','estado','colonia','calle','numero','codigo_postal')}),
+		(_('Personal info'), {'fields': ('nombre','apellido_paterno','apellido_materno','cumpleanos','sexo','telefono','pais','estado','colonia','calle','numero','codigo_postal')}),
 		(_('Permissions'), {
 			'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
 		}),
@@ -31,6 +31,7 @@ class UsuarioAdmin(UserAdmin):
 
 
 admin.site.register(Usuario.Usuario, UsuarioAdmin)
+admin.site.register(Usuario.Persona)
 admin.site.register(Programa.Disciplina)
 admin.site.register(Programa.SubDisciplina)
 admin.site.register(Programa.TipoPrograma)

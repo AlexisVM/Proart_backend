@@ -24,14 +24,30 @@ class UsuarioManager(UserManager):
 		if extra_fields.get('is_superuser') is not True:
 			raise ValueError('Superuser must have is_superuser=True.')
 		return self._create_user(email, password, **extra_fields)
-	def get_by_natural_key(self, username):
+	def get_by_natural_key(self, email):
 		return self.get(**{self.model.USERNAME_FIELD: email})
-
-class Usuario(AbstractBaseUser, PermissionsMixin):
+class Persona(models.Model):
 	SEXOS = [
 	('M', 'Masculino'),
 	('F', 'Femenino'),
+	('O', 'Otro'),
 	]
+	nombre = models.CharField(max_length=50,blank=True,null=True)
+	apellido_materno = models.CharField(max_length=50,blank=True,null=True)
+	apellido_paterno = models.CharField(max_length=50,blank=True,null=True)
+	cumpleanos = models.DateField(blank=True,null=True)
+	sexo = models.CharField(max_length=2, choices=SEXOS,blank=True,null=True,default='O')
+	personas = models.ForeignKey('Usuario',related_name="personas_usuario",null=True,blank=True, on_delete=models.CASCADE)
+	def __str__(self):
+		return self.nombre
+
+class Usuario(Persona, AbstractBaseUser, PermissionsMixin):
+	
+	TIPOCUENTA = [
+	('I','Individual'),
+	('G','Grupal'),
+	]	
+
 	TIPOSANGRE = [
 	('O-', 'O negativo'),
 	('O+', 'O positivo'),
@@ -42,12 +58,9 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 	('AB-', 'AB negativo'),
 	('AB+', 'AB positivo'),
 	]
-	nombre = models.CharField(max_length=50,blank=True,null=True)
-	apellido_materno = models.CharField(max_length=50,blank=True,null=True)
-	apellido_paterno = models.CharField(max_length=50,blank=True,null=True)
+
+	
 	email = models.EmailField(_('email address'), blank=False,unique=True)
-	cumpleanos = models.DateField(blank=True,null=True)
-	sexo = models.CharField(max_length=2, choices=SEXOS,blank=True,null=True)
 	telefono=models.CharField(max_length=50,blank=True,null=True)
 	calle=models.CharField(max_length=50,blank=True,null=True)
 	pais=models.CharField(max_length=50,blank=True,null=True)
@@ -70,9 +83,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 			'Unselect this instead of deleting accounts.'
 		),
 	)
+	tipo_de_cuenta = models.CharField(max_length=16, choices=TIPOCUENTA, default='I')
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['nombre','sexo','password'] 
+	REQUIRED_FIELDS = ['nombre','apellido_paterno','apellido_materno','cumpleanos','sexo','password'] 
 	objects  = UsuarioManager()
 
 	def clean(self):
@@ -94,5 +108,3 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 		"""Send an email to this user."""
 		send_mail(subject, message, from_email, [self.email], **kwargs)
 
-	def __str__(self):
-		return self.nombre
