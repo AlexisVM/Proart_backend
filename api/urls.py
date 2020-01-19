@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from djoser import views
+from .views import *
 
 urlpatterns = [
-	path('users/', views.UserViewSet.as_view({
+	path('users/', UsuarioViewSet.as_view({
     'get': 'list',
     'post': 'create',
     'delete': 'destroy',

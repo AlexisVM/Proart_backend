@@ -36,4 +36,4 @@ class UserCreateSerializerCustomFields(UserCreateSerializer):
 			'alergia',
 			'tipo_de_sangre',
 		)
-
+		
