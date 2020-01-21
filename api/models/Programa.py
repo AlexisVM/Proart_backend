@@ -38,7 +38,7 @@ class Programa(models.Model):
 	edad_minima = models.PositiveSmallIntegerField()
 	edad_maxima = models.PositiveSmallIntegerField()
 	precio = models.PositiveSmallIntegerField()
-	disciplinas = models.ManyToManyField(SubDisciplina)
+	disciplinas = models.ManyToManyField(Disciplina)
 	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
 	def __str__(self):
 		return self.nombre
@@ -48,14 +48,15 @@ class Programa(models.Model):
 class Grupo(models.Model):
 	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
 	maestro = models.ManyToManyField(Usuario.Persona)
+	nivel = models.OneToOneField(Nivel,on_delete=models.SET_NULL, null=True)
 	inicio = models.TimeField()
 	final = models.TimeField()
 	dias = fields.DayOfTheWeekField()
 
 class Inscripcion(models.Model):
 	PARCIALIDADES = [
-	('1','Una exhibición '),
-	('3','Tres pagos')
+	(1,'Una exhibición'),
+	(3,'Tres pagos')
 	]
 	persona = models.ForeignKey(Usuario.Persona, on_delete=models.CASCADE)
 	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
