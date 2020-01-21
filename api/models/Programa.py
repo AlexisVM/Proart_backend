@@ -1,5 +1,5 @@
 from django.db import models
-
+from . import Usuario,fields
 class Disciplina(models.Model):
 	nombre = models.CharField(max_length=30)
 	def __str__(self):
@@ -25,6 +25,8 @@ class TipoPrograma(models.Model):
 class Nivel(models.Model):
 	nombre = models.CharField(max_length=30)
 	descripcion = models.TextField(max_length=100,blank=True)
+	clase_derecho = models.PositiveSmallIntegerField()
+	programa = models.ForeignKey('Programa',null=True,on_delete=models.SET_NULL)
 	def __str__(self):
 		return self.nombre
 
@@ -37,8 +39,32 @@ class Programa(models.Model):
 	edad_maxima = models.PositiveSmallIntegerField()
 	precio = models.PositiveSmallIntegerField()
 	disciplinas = models.ManyToManyField(SubDisciplina)
-	nivel = models.ForeignKey(Nivel,null=True,on_delete=models.SET_NULL)
 	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
-
 	def __str__(self):
 		return self.nombre
+
+
+
+class Grupo(models.Model):
+	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
+	maestro = models.ManyToManyField(Usuario.Persona)
+	inicio = models.TimeField()
+	final = models.TimeField()
+	dias = fields.DayOfTheWeekField()
+
+class Inscripcion(models.Model):
+	PARCIALIDADES = [
+	('1','Una exhibición '),
+	('3','Tres pagos')
+	]
+	persona = models.ForeignKey(Usuario.Persona, on_delete=models.CASCADE)
+	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
+	grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, null=True)
+	parcialidades = models.PositiveSmallIntegerField(choices=PARCIALIDADES)
+
+class Comprobante(models.Model):
+	comprobante = models.ForeignKey(Inscripcion,on_delete=models.SET_NULL, null=True)
+	archivo = models.FileField(upload_to='comprobantes')
+	fecha_de_subida = models.DateField(blank=True,null=True)
+	fecha_limite = models.DateField(blank=True,null=True)
+	monto = models.DecimalField(max_digits=5, decimal_places=2)

@@ -1,1 +1,1 @@
-from . import Usuario,Programa
+from . import Usuario,Programa,fields

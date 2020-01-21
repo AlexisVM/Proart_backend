@@ -26,22 +26,32 @@ class UsuarioManager(UserManager):
 		return self._create_user(email, password, **extra_fields)
 	def get_by_natural_key(self, email):
 		return self.get(**{self.model.USERNAME_FIELD: email})
+
+
 class Persona(models.Model):
+	
 	SEXOS = [
 	('M', 'Masculino'),
 	('F', 'Femenino'),
 	('O', 'Otro'),
 	]
+	
+	TIPO_PERSONA = [
+	('A','Alumno'),
+	('P','Profesor')
+	]
+
 	nombre = models.CharField(max_length=50,blank=True,null=True)
 	apellido_materno = models.CharField(max_length=50,blank=True,null=True)
 	apellido_paterno = models.CharField(max_length=50,blank=True,null=True)
 	cumpleanos = models.DateField(blank=True,null=True)
 	sexo = models.CharField(max_length=2, choices=SEXOS,blank=True,null=True,default='O')
+	tipo_persona = models.CharField(max_length=2, choices=TIPO_PERSONA,blank=True,null=True,default='A')
 	personas = models.ForeignKey('Usuario',related_name="personas_usuario",null=True,blank=True, on_delete=models.CASCADE)
 	def __str__(self):
 		return self.nombre
 
-class Usuario(Persona, AbstractBaseUser, PermissionsMixin):
+class Usuario(AbstractBaseUser, PermissionsMixin, Persona):
 	
 	TIPOCUENTA = [
 	('I','Individual'),

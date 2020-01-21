@@ -40,12 +40,14 @@ INSTALLED_APPS = [
 	'rest_framework',
 	'djoser',
 	'rest_framework.authtoken',
+	'multiselectfield',
 	'api',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 DJOSER = {
 	'SERIALIZERS': {
 	   'user_create': 'api.serializers.UserCreateSerializerCustomFields',
+	   'user': 'api.serializers.DynamicUserSerializer',
 	   },
 }
 AUTH_USER_MODEL = 'api.Usuario'

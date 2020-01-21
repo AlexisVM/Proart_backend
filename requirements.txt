@@ -4,3 +4,4 @@ djangorestframework
 djoser
 dateutils
 psycopg2-binary
+django-multiselectfield
