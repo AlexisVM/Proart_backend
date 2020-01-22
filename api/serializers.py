@@ -49,6 +49,17 @@ class TipoProgramaSerializer(serializers.ModelSerializer):
 		model=Programa.TipoPrograma
 		fields = ['id','nombre','descripcion']
 
+class SubDisciplinasSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Programa.SubDisciplina
+		fields = '__all__'
+
+class DisciplinaSerializer(serializers.ModelSerializer):
+	subdisciplinas = SubDisciplinasSerializer(many=True)
+	class Meta:
+		model = Programa.Disciplina
+		fields = '__all__'
+
 class UserMeSerializer(DynamicUserSerializer):
 	class Meta:
 		model = User
