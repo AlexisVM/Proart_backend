@@ -52,6 +52,8 @@ class Grupo(models.Model):
 	inicio = models.TimeField()
 	final = models.TimeField()
 	dias = fields.DayOfTheWeekField()
+	cupo = models.PositiveSmallIntegerField(default=20)
+
 
 class Inscripcion(models.Model):
 	PARCIALIDADES = [
