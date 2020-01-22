@@ -48,8 +48,17 @@ DJOSER = {
 	'SERIALIZERS': {
 	   'user_create': 'api.serializers.UserCreateSerializerCustomFields',
 	   'user': 'api.serializers.DynamicUserSerializer',
+	   'current_user': 'api.serializers.UserMeSerializer',
 	   },
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+
 AUTH_USER_MODEL = 'api.Usuario'
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',

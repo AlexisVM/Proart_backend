@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from djoser import views
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
+from . import serializers
+from .models import Programa
 
 # Create yourfrom djoser import views views here.
 
@@ -27,5 +29,9 @@ class UsuarioViewSet(views.UserViewSet):
 
 	def retrieve(self, request, *args, **kwargs):
 		instance = self.get_object()
-		serializer = self.get_serializer(instance,  fields=('id', 'email'))
+		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
+
+class TipoDeProgramasViewSet(viewsets.ModelViewSet):
+	serializer_class = serializers.TipoProgramaSerializer
+	queryset = Programa.TipoPrograma.objects.all()

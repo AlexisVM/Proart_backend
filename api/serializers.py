@@ -43,3 +43,13 @@ class DynamicUserSerializer(UserSerializer):
 	class Meta:
 		model = User
 		fields = ('email','password','nombre','apellido_paterno','apellido_materno','cumpleanos','sexo','tipo_de_cuenta')
+
+class TipoProgramaSerializer(serializers.ModelSerializer):
+	class Meta:
+		model=Programa.TipoPrograma
+		fields = ['id','nombre','descripcion']
+
+class UserMeSerializer(DynamicUserSerializer):
+	class Meta:
+		model = User
+		fields = '__all__'

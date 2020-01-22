@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from .views import *
+
 
 urlpatterns = [
 	path('users/', UsuarioViewSet.as_view({
@@ -25,6 +27,17 @@ urlpatterns = [
     'put': 'update',
     'patch': 'partial_update'
     })), 
+    path('me/', UsuarioViewSet.as_view({
+    'get': 'me',
+    'delete': 'me',
+    'put': 'me',
+    'patch': 'me',
+    })),
     path('auth/login/', views.TokenCreateView.as_view()),
     path('auth/logout/', views.TokenDestroyView.as_view()),
-    ]
+    
+    path('tiposprogramas/', TipoDeProgramasViewSet.as_view({
+        'get': 'list',
+        })),
+
+    ] 
