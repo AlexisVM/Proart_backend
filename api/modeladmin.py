@@ -1,9 +1,11 @@
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext, gettext_lazy as _
+from dateutil.relativedelta import relativedelta
+import datetime
 from django.db import models
 from .widgets import *
-
+from .models.Usuario import Persona
 ##Custom Admins
 class UsuarioAdmin(UserAdmin):
 	fieldsets = (
@@ -30,8 +32,14 @@ class UsuarioAdmin(UserAdmin):
 
 class ComprobanteAdmin(ModelAdmin):
 	formfield_overrides = {
-        models.FileField: {'widget': AdminImagePdfWidget},
-        models.ImageField: {'widget': AdminImagePdfWidget},
-    }
+		models.FileField: {'widget': AdminImagePdfWidget},
+		models.ImageField: {'widget': AdminImagePdfWidget},
+	}
 	list_display = ('aprobado','archivo')
 	list_filter = ('aprobado',)
+
+class GrupoModelAdmin(ModelAdmin):
+	def formfield_for_manytomany(self, db_field, request, **kwargs):
+		if db_field.name == "maestro":
+			kwargs["queryset"] = Persona.objects.filter(tipo_persona='P')
+		return super().formfield_for_manytomany(db_field, request, **kwargs)

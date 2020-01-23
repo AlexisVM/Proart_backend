@@ -2,7 +2,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin import AdminSite,ModelAdmin
 from django.db import models
 from .models import *
-from dateutil.relativedelta import relativedelta
 import datetime
 from .modeladmin import *
 
@@ -28,4 +27,4 @@ admin.register(Programa.Nivel)
 admin.register(Programa.Programa)
 admin.register(Programa.Comprobante, ComprobanteAdmin)
 admin.register(Programa.Inscripcion)
-admin.register(Programa.Grupo)
+admin.register(Programa.Grupo,GrupoModelAdmin)
