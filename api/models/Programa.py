@@ -1,5 +1,8 @@
 from django.db import models
 from . import Usuario,fields
+from ..validators import *
+from ..utils import hashImage
+
 class Disciplina(models.Model):
 	nombre = models.CharField(max_length=30)
 	def __str__(self):
@@ -66,8 +69,10 @@ class Inscripcion(models.Model):
 	parcialidades = models.PositiveSmallIntegerField(choices=PARCIALIDADES)
 
 class Comprobante(models.Model):
-	comprobante = models.ForeignKey(Inscripcion,on_delete=models.SET_NULL, null=True)
-	archivo = models.FileField(upload_to='comprobantes')
+	inscripcion = models.ForeignKey(Inscripcion,on_delete=models.SET_NULL, null=True)
+	archivo = models.FileField(upload_to=hashImage, validators=[validate_comprobante])
 	fecha_de_subida = models.DateField(blank=True,null=True)
 	fecha_limite = models.DateField(blank=True,null=True)
 	monto = models.DecimalField(max_digits=5, decimal_places=2)
+	aprobado = models.BooleanField(default=False)
+	parcialidad = models.PositiveSmallIntegerField()

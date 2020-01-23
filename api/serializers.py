@@ -60,6 +60,12 @@ class DisciplinaSerializer(serializers.ModelSerializer):
 		model = Programa.Disciplina
 		fields = '__all__'
 
+class ProgramaSerializer(serializers.ModelSerializer):
+	disciplinas = DisciplinaSerializer(many=True)
+	class Meta:
+		model = Programa.Programa
+		fields = '__all__'
+
 class UserMeSerializer(DynamicUserSerializer):
 	class Meta:
 		model = User
