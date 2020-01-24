@@ -69,6 +69,10 @@ class Inscripcion(models.Model):
 	parcialidades = models.PositiveSmallIntegerField(choices=PARCIALIDADES)
 
 class Comprobante(models.Model):
+	TIPO_PAGO = [('D','Depósito'),
+	('T','Transferencia'),
+	('E','Efectivo'),
+	]
 	inscripcion = models.ForeignKey(Inscripcion,on_delete=models.SET_NULL, null=True)
 	archivo = models.FileField(upload_to=hashImage, validators=[validate_comprobante])
 	fecha_de_subida = models.DateField(blank=True,null=True)
@@ -76,3 +80,4 @@ class Comprobante(models.Model):
 	monto = models.DecimalField(max_digits=5, decimal_places=2)
 	aprobado = models.BooleanField(default=False)
 	parcialidad = models.PositiveSmallIntegerField()
+	tipo_de_pago = models.CharField(max_length=3, choices=TIPO_PAGO, default='D')
