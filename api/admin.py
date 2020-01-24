@@ -2,7 +2,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin import AdminSite,ModelAdmin
 from django.db import models
 from .models import *
-import datetime
 from .modeladmin import *
 
 ##Admin Site

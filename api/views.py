@@ -35,3 +35,7 @@ class UsuarioViewSet(views.UserViewSet):
 class TipoDeProgramasViewSet(viewsets.ModelViewSet):
 	serializer_class = serializers.TipoProgramaSerializer
 	queryset = Programa.TipoPrograma.objects.all()
+
+class ProgramasViewSet(viewsets.ModelViewSet):
+	serializer_class = serializers.ProgramaSerializer
+	queryset = Programa.Programa.objects.all()

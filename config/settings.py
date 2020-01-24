@@ -147,3 +147,4 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR+'/static/media/'
 MEDIA_URL = '/media/'
 COMPROBANTES_DIR = 'comprobantes'
+

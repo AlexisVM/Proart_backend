@@ -29,20 +29,30 @@ class Nivel(models.Model):
 	nombre = models.CharField(max_length=30)
 	descripcion = models.TextField(max_length=100,blank=True)
 	clase_derecho = models.PositiveSmallIntegerField()
-	programa = models.ForeignKey('Programa',null=True,on_delete=models.SET_NULL)
+	programa = models.ForeignKey('Programa',null=True,on_delete=models.SET_NULL, related_name="niveles")
+	precio = models.PositiveSmallIntegerField()
 	def __str__(self):
 		return self.nombre
 
+class Semana(models.Model):
+	fecha_inicio = models.DateField()
+	fecha_final =  models.DateField()
+
+class Bloque(models.Model):
+	nombre = models.CharField(max_length=30)
+	inicio = models.TimeField()
+	final = models.TimeField()
+
 class Programa(models.Model):
 	nombre = models.CharField(max_length=30)
-	dirgido = models.TextField(max_length=30)
+	dirigido = models.TextField(max_length=30)
 	estructura = models.TextField(max_length=30)
 	modalidad_semanal = models.TextField(max_length=30)
 	edad_minima = models.PositiveSmallIntegerField()
 	edad_maxima = models.PositiveSmallIntegerField()
-	precio = models.PositiveSmallIntegerField()
 	disciplinas = models.ManyToManyField(Disciplina)
 	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
+	bloques = models.ManyToManyField(Bloque)
 	def __str__(self):
 		return self.nombre
 
@@ -50,13 +60,19 @@ class Programa(models.Model):
 
 class Grupo(models.Model):
 	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
-	maestro = models.ManyToManyField(Usuario.Persona)
-	nivel = models.OneToOneField(Nivel,on_delete=models.SET_NULL, null=True)
+	maestro = models.ManyToManyField(Usuario.Persona, related_name="maestros")
+	nivel = models.ForeignKey(Nivel,on_delete=models.SET_NULL, null=True, related_name='grupos')
+	semana = models.ForeignKey(Semana,on_delete=models.SET_NULL, null=True, related_name='grupos')
 	inicio = models.TimeField()
 	final = models.TimeField()
+	bloque = models.ForeignKey(Bloque, on_delete=models.SET_NULL, null=True)
 	dias = fields.DayOfTheWeekField()
 	cupo = models.PositiveSmallIntegerField(default=20)
 
+class Paquete(models.Model):
+	nombre = models.CharField(max_length=30)
+	descripcion = models.TextField(max_length=30)
+	semanas = models.PositiveSmallIntegerField()
 
 class Inscripcion(models.Model):
 	PARCIALIDADES = [
@@ -64,8 +80,10 @@ class Inscripcion(models.Model):
 	(3,'Tres pagos')
 	]
 	persona = models.ForeignKey(Usuario.Persona, on_delete=models.CASCADE)
+	paquete = models.ForeignKey(Paquete, on_delete=models.SET_NULL, null=True)
+	nivel = models.ForeignKey(Nivel, on_delete=models.SET_NULL, null=True)
+	grupos = models.ManyToManyField(Grupo)
 	programa = models.ForeignKey(Programa, on_delete=models.SET_NULL, null=True)
-	grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, null=True)
 	parcialidades = models.PositiveSmallIntegerField(choices=PARCIALIDADES)
 
 class Comprobante(models.Model):
