@@ -15,7 +15,7 @@ class UsuarioViewSet(views.UserViewSet):
 			serializer = self.get_serializer(page, many=True)
 			return self.get_paginated_response(serializer.data)
 
-		serializer = self.get_serializer(queryset, many=True,  fields=('email',))
+		serializer = self.get_serializer(queryset, many=True,  fields=('email','id','nombre','apellido_paterno'))
 		
 		return Response(serializer.data)
 

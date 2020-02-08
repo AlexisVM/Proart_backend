@@ -83,7 +83,7 @@ class ProgramaSerializer(serializers.ModelSerializer):
 	niveles = NivelSerializer(many=True)
 	class Meta:
 		model = Programa.Programa
-		fields = ('id','nombre','dirgido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','tipo_programa','disciplinas','niveles')
+		fields = ('id','nombre','dirigido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','tipo_programa','disciplinas','niveles')
 
 class UserMeSerializer(DynamicUserSerializer):
 	class Meta:
