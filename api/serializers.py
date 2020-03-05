@@ -78,12 +78,19 @@ class NivelSerializer(serializers.ModelSerializer):
 		model = Programa.Nivel
 		fields = ('nombre','descripcion','clase_derecho','grupos','precio')
 
+class PaqueteSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Programa.Paquete
+		fields = '__all__'
+
 class ProgramaSerializer(serializers.ModelSerializer):
 	disciplinas = DisciplinaSerializer(many=True)
 	niveles = NivelSerializer(many=True)
 	class Meta:
 		model = Programa.Programa
 		fields = ('id','nombre','dirigido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','tipo_programa','disciplinas','niveles')
+
+
 
 class UserMeSerializer(DynamicUserSerializer):
 	class Meta:
