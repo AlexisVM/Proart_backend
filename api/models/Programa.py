@@ -79,7 +79,7 @@ class Inscripcion(models.Model):
 	(1,'Una exhibición'),
 	(3,'Tres pagos')
 	]
-	persona = models.ForeignKey(Usuario.Persona, on_delete=models.CASCADE)
+	persona = models.ForeignKey(Usuario.Persona, on_delete=models.CASCADE, related_name="inscripciones")
 	paquete = models.ForeignKey(Paquete, on_delete=models.SET_NULL, null=True)
 	nivel = models.ForeignKey(Nivel, on_delete=models.SET_NULL, null=True)
 	grupos = models.ManyToManyField(Grupo)

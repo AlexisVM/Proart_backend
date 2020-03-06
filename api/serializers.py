@@ -90,9 +90,15 @@ class ProgramaSerializer(serializers.ModelSerializer):
 		model = Programa.Programa
 		fields = ('id','nombre','dirigido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','tipo_programa','disciplinas','niveles')
 
-
-
+class InscripcionSerializer(serializers.ModelSerializer):
+	grupos = GrupoSerializer(many=True)
+	paquete = PaqueteSerializer(many=False)
+	class Meta:
+		model = Programa.Inscripcion
+		fields = '__all__'
+ 
 class UserMeSerializer(DynamicUserSerializer):
+	inscripciones = InscripcionSerializer(many=True)
 	class Meta:
 		model = User
-		fields = '__all__'
+		fields = ('nombre','apellido_paterno','apellido_materno','inscripciones')
