@@ -70,7 +70,7 @@ class GrupoSerializer(serializers.ModelSerializer):
 	dias = f.MultipleChoiceField(choices=fields.DAY_OF_THE_WEEK)
 	class Meta:
 		model = Programa.Grupo
-		fields = ('id','dias','inicio','final','cupo','fecha_inicio','fecha_final','maestro')
+		fields = ('id','dias','inicio','final','cupo','inicio','final','maestro')
 
 class NivelSerializer(serializers.ModelSerializer):
 	grupos = GrupoSerializer(many=True)
@@ -95,7 +95,7 @@ class InscripcionSerializer(serializers.ModelSerializer):
 	paquete = PaqueteSerializer(many=False)
 	class Meta:
 		model = Programa.Inscripcion
-		fields = '__all__'
+		fields = ('__all__')
  
 class UserMeSerializer(DynamicUserSerializer):
 	inscripciones = InscripcionSerializer(many=True)
