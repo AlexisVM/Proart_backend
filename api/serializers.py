@@ -76,7 +76,7 @@ class NivelSerializer(serializers.ModelSerializer):
 	grupos = GrupoSerializer(many=True)
 	class Meta:
 		model = Programa.Nivel
-		fields = ('nombre','descripcion','clase_derecho','grupos','precio')
+		fields = ('id','nombre','descripcion','clase_derecho','grupos','precio')
 
 class PaqueteSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -96,7 +96,12 @@ class InscripcionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Programa.Inscripcion
 		fields = ('__all__')
- 
+
+class InscripcionCreateSerializer(serializers.ModelSerializer):
+ 	class Meta:
+ 		model = Programa.Inscripcion
+ 		fields = ('__all__')
+
 class UserMeSerializer(DynamicUserSerializer):
 	inscripciones = InscripcionSerializer(many=True)
 	class Meta:

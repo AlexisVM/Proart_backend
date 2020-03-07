@@ -39,5 +39,14 @@ urlpatterns = [
     path('tiposprogramas/', TipoDeProgramasViewSet.as_view({
         'get': 'list',
         })),
-
+    path('programas/', ProgramasViewSet.as_view({
+        'get': 'list',
+        })),
+    path('inscripciones/', InscripcionViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+    'delete': 'destroy',
+    'put': 'update',
+    'patch': 'partial_update'
+    })), 
     ] 

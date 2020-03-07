@@ -39,3 +39,11 @@ class TipoDeProgramasViewSet(viewsets.ModelViewSet):
 class ProgramasViewSet(viewsets.ModelViewSet):
 	serializer_class = serializers.ProgramaSerializer
 	queryset = Programa.Programa.objects.all()
+
+class PaqueteViewSet(viewsets.ModelViewSet):
+	serializer_class = serializers.ProgramaSerializer
+	queryset = Programa.Paquete.objects.all()
+	
+class InscripcionViewSet(viewsets.ModelViewSet):
+	serializer_class = serializers.InscripcionCreateSerializer
+	queryset = Programa.Inscripcion.objects.all()
