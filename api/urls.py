@@ -42,6 +42,12 @@ urlpatterns = [
     path('programas/', ProgramasViewSet.as_view({
         'get': 'list',
         })),
+    path('grupos/', GruposViewSet.as_view({
+        'get': 'list',
+        })),
+    path('paquetes/', PaqueteViewSet.as_view({
+        'get': 'list',
+        })),
     path('inscripciones/', InscripcionViewSet.as_view({
     'get': 'list',
     'post': 'create',
