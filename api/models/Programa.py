@@ -25,12 +25,25 @@ class TipoPrograma(models.Model):
 	def __str__(self):
 		return self.nombre
 
+class Programa(models.Model):
+	nombre = models.CharField(max_length=30)
+	disciplinas = models.ManyToManyField(Disciplina)
+	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
+	def __str__(self):
+		return self.nombre
+
+
 class Nivel(models.Model):
 	nombre = models.CharField(max_length=30)
 	descripcion = models.TextField(max_length=100,blank=True)
+	dirigido = models.TextField(max_length=30)
+	estructura = models.TextField(max_length=30)
 	clase_derecho = models.PositiveSmallIntegerField()
 	programa = models.ForeignKey('Programa',null=True,on_delete=models.SET_NULL, related_name="niveles")
-	precio = models.PositiveSmallIntegerField()
+	modalidad_semanal = models.TextField(max_length=30)
+	edad_minima = models.PositiveSmallIntegerField()
+	edad_maxima = models.PositiveSmallIntegerField()
+
 	def __str__(self):
 		return self.nombre
 
@@ -39,22 +52,12 @@ class Semana(models.Model):
 	fecha_final =  models.DateField()
 
 class Bloque(models.Model):
+	nivel = models.ForeignKey(Nivel,null=True,on_delete=models.SET_NULL, related_name="bloques")
+	precio = models.PositiveSmallIntegerField()
 	nombre = models.CharField(max_length=30)
 	inicio = models.TimeField()
 	final = models.TimeField()
 
-class Programa(models.Model):
-	nombre = models.CharField(max_length=30)
-	dirigido = models.TextField(max_length=30)
-	estructura = models.TextField(max_length=30)
-	modalidad_semanal = models.TextField(max_length=30)
-	edad_minima = models.PositiveSmallIntegerField()
-	edad_maxima = models.PositiveSmallIntegerField()
-	disciplinas = models.ManyToManyField(Disciplina)
-	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
-	bloques = models.ManyToManyField(Bloque)
-	def __str__(self):
-		return self.nombre
 
 
 
