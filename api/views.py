@@ -32,9 +32,6 @@ class UsuarioViewSet(views.UserViewSet):
 		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
 
-class TipoDeProgramasViewSet(viewsets.ModelViewSet):
-	serializer_class = serializers.TipoProgramaSerializer
-	queryset = Programa.TipoPrograma.objects.all()
 
 class GruposViewSet(viewsets.ModelViewSet):
 	serializer_class = serializers.GrupoSerializer

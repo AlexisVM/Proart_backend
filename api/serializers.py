@@ -44,10 +44,6 @@ class DynamicUserSerializer(UserSerializer):
 		model = User
 		fields = ('email','nombre','apellido_paterno','apellido_materno',)
 
-class TipoProgramaSerializer(serializers.ModelSerializer):
-	class Meta:
-		model=Programa.TipoPrograma
-		fields = ['id','nombre','descripcion']
 
 class SubDisciplinasSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -88,7 +84,7 @@ class ProgramaSerializer(serializers.ModelSerializer):
 	niveles = NivelSerializer(many=True)
 	class Meta:
 		model = Programa.Programa
-		fields = ('id','nombre','dirigido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','tipo_programa','disciplinas','niveles')
+		fields = ('id','nombre','dirigido','estructura','modalidad_semanal','edad_minima','edad_maxima','disciplinas','disciplinas','niveles')
 
 class InscripcionSerializer(serializers.ModelSerializer):
 	grupos = GrupoSerializer(many=True)

@@ -36,11 +36,9 @@ urlpatterns = [
     path('auth/login/', views.TokenCreateView.as_view()),
     path('auth/logout/', views.TokenDestroyView.as_view()),
     
-    path('tiposprogramas/', TipoDeProgramasViewSet.as_view({
-        'get': 'list',
-        })),
+
     path('programas/', ProgramasViewSet.as_view({
-        'get': 'list',
+        'get': 'list'
         })),
     path('grupos/', GruposViewSet.as_view({
         'get': 'list',

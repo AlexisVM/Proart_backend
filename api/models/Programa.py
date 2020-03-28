@@ -19,16 +19,11 @@ class SubDisciplina(models.Model):
 		return self.nombre
 
 
-class TipoPrograma(models.Model):
-	nombre = models.CharField(max_length=30)
-	descripcion = models.TextField(max_length=100,blank=True)
-	def __str__(self):
-		return self.nombre
+
 
 class Programa(models.Model):
 	nombre = models.CharField(max_length=30)
 	disciplinas = models.ManyToManyField(Disciplina)
-	tipo_programa = models.ForeignKey(TipoPrograma,null=True,on_delete=models.SET_NULL)
 	def __str__(self):
 		return self.nombre
 
@@ -43,6 +38,8 @@ class Nivel(models.Model):
 	modalidad_semanal = models.TextField(max_length=30)
 	edad_minima = models.PositiveSmallIntegerField()
 	edad_maxima = models.PositiveSmallIntegerField()
+	precio_semana_uno = models.PositiveSmallIntegerField()
+	precio_semana_dos = models.PositiveSmallIntegerField()
 
 	def __str__(self):
 		return self.nombre
@@ -50,15 +47,6 @@ class Nivel(models.Model):
 class Semana(models.Model):
 	fecha_inicio = models.DateField()
 	fecha_final =  models.DateField()
-
-class Bloque(models.Model):
-	nivel = models.ForeignKey(Nivel,null=True,on_delete=models.SET_NULL, related_name="bloques")
-	precio = models.PositiveSmallIntegerField()
-	nombre = models.CharField(max_length=30)
-	inicio = models.TimeField()
-	final = models.TimeField()
-
-
 
 
 class Grupo(models.Model):
@@ -68,7 +56,6 @@ class Grupo(models.Model):
 	semana = models.ForeignKey(Semana,on_delete=models.SET_NULL, null=True, related_name='grupos')
 	inicio = models.TimeField()
 	final = models.TimeField()
-	bloque = models.ForeignKey(Bloque, on_delete=models.SET_NULL, null=True)
 	dias = fields.DayOfTheWeekField()
 	cupo = models.PositiveSmallIntegerField(default=20)
 
@@ -100,5 +87,6 @@ class Comprobante(models.Model):
 	fecha_limite = models.DateField(blank=True,null=True)
 	monto = models.DecimalField(max_digits=5, decimal_places=2)
 	aprobado = models.BooleanField(default=False)
+	#En que parcialidad va respecto a la inscripción
 	parcialidad = models.PositiveSmallIntegerField()
 	tipo_de_pago = models.CharField(max_length=3, choices=TIPO_PAGO, default='D')
