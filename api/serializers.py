@@ -99,7 +99,7 @@ class InscripcionCreateSerializer(serializers.ModelSerializer):
  		fields = ('__all__')
 
 class UserMeSerializer(DynamicUserSerializer):
-	inscripciones = InscripcionSerializer(many=True)
+	inscripciones = InscripcionSerializer(many=True, read_only=True)
 	class Meta:
 		model = User
-		fields = ('nombre','apellido_paterno','apellido_materno','inscripciones')
+		fields = ('nombre','apellido_paterno','apellido_materno','email','telefono','calle','pais','estado','numero','colonia','alergia','tipo_de_sangre','codigo_postal','inscripciones')
